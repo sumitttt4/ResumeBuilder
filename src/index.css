@@ -8,33 +8,52 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Neumorphic Design System */
+    --background: 0 0% 98%;
+    --foreground: 220 13% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 13% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 13% 18%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Brand Colors - Professional Blue/Teal */
+    --primary: 200 85% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 200 85% 45%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 20% 92%;
+    --secondary-foreground: 220 13% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 20% 95%;
+    --muted-foreground: 215 15% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 200 25% 88%;
+    --accent-foreground: 200 85% 35%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 88%;
+    --input: 220 13% 91%;
+    --ring: 200 85% 55%;
+
+    /* Neumorphic Shadows */
+    --shadow-light: 0 0% 100%;
+    --shadow-dark: 200 20% 85%;
+    --shadow-neumorphic: 8px 8px 16px hsl(var(--shadow-dark)), -8px -8px 16px hsl(var(--shadow-light));
+    --shadow-neumorphic-inset: inset 8px 8px 16px hsl(var(--shadow-dark)), inset -8px -8px 16px hsl(var(--shadow-light));
+    --shadow-soft: 0 4px 12px hsl(200 20% 85% / 0.15);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(200 90% 45%));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--muted)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(210 25% 96%));
+
+    /* Typography */
+    --font-heading: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
 
     --radius: 0.5rem;
 
@@ -100,6 +119,57 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body;
+  }
+}
+
+@layer components {
+  /* Neumorphic Components */
+  .neumorphic {
+    @apply bg-background;
+    box-shadow: var(--shadow-neumorphic);
+  }
+
+  .neumorphic-inset {
+    @apply bg-background;
+    box-shadow: var(--shadow-neumorphic-inset);
+  }
+
+  .soft-shadow {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  /* Button Variants */
+  .btn-neumorphic {
+    @apply neumorphic px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105;
+  }
+
+  .btn-neumorphic:hover {
+    box-shadow: 12px 12px 24px hsl(var(--shadow-dark)), -12px -12px 24px hsl(var(--shadow-light));
+  }
+
+  .btn-neumorphic:active {
+    @apply neumorphic-inset;
+  }
+
+  /* Card Variants */
+  .card-neumorphic {
+    @apply neumorphic rounded-3xl p-8;
+  }
+
+  .card-feature {
+    @apply soft-shadow rounded-2xl p-6 bg-card hover:scale-105 transition-all duration-300;
   }
 }
