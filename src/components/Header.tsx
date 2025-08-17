@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { FileText, User, Languages } from "lucide-react";
+import { FileText } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
   return (
@@ -32,6 +33,7 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Button variant="ghost" size="sm" className="hidden sm:flex">
               Sign In
             </Button>
