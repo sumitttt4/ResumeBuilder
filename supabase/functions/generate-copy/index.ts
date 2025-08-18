@@ -8,7 +8,7 @@ const corsHeaders = {
 };
 
 interface GenerateRequest {
-  type: 'cold_email' | 'cover_letter';
+  type: 'cold_email' | 'cover_letter' | 'portfolio';
   prompt: string;
   context?: any;
 }
@@ -75,6 +75,27 @@ const handler = async (req: Request): Promise<Response> => {
       - Follow proper business letter format
       
       Format as a complete cover letter with proper structure.`;
+    } else if (type === 'portfolio') {
+      systemPrompt = `You are an expert portfolio content writer and UX copywriter. Create compelling portfolio website content that:
+      - Showcases professional strengths and unique value proposition
+      - Includes engaging hero section copy with clear positioning
+      - Writes compelling "About Me" sections that build trust and connection
+      - Creates project descriptions that highlight impact and technical skills
+      - Develops professional yet personable tone throughout
+      - Incorporates relevant keywords for the person's industry
+      - Suggests content structure and sections for a complete portfolio
+      - Makes the person stand out in their field
+      - Includes call-to-action suggestions for contact and hiring
+      
+      Based on the provided information, create comprehensive portfolio content including:
+      1. Hero section (headline, subheadline, brief intro)
+      2. About section (professional story, values, what makes them unique)
+      3. Skills/expertise summary
+      4. Project descriptions and impact statements
+      5. Professional summary/elevator pitch
+      6. Call-to-action suggestions
+      
+      Format as structured content with clear section headings.`;
     }
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {

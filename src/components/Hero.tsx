@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Sparkles, Globe, Zap, Award } from "lucide-react";
@@ -43,13 +44,17 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary-hover text-primary-foreground px-8 py-4 text-lg font-semibold">
-                Create Resume Free
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button variant="outline" size="lg" className="px-8 py-4 text-lg font-semibold btn-neumorphic">
-                View Templates
-              </Button>
+              <Link to="/resume/sample">
+                <Button size="lg" className="bg-primary hover:bg-primary-hover text-primary-foreground px-8 py-4 text-lg font-semibold">
+                  Create Resume Free
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link to="/templates">
+                <Button variant="outline" size="lg" className="px-8 py-4 text-lg font-semibold btn-neumorphic">
+                  View Templates
+                </Button>
+              </Link>
             </div>
 
             <div className="flex items-center gap-8 pt-4">

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -63,6 +64,16 @@ const templates = [
     preview: "/api/placeholder/300/400",
     colors: ["Navy", "Maroon", "Gray"],
     featured: false
+  },
+  {
+    id: 7,
+    name: "Indian Professional",
+    category: "India",
+    rating: 4.8,
+    downloads: "25.1k",
+    preview: "/api/placeholder/300/400",
+    colors: ["Saffron", "Blue", "Green"],
+    featured: true
   }
 ];
 
@@ -85,7 +96,7 @@ const Templates = () => {
 
         {/* Template Categories */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {["All", "Executive", "Creative", "Technology", "Sales", "Academic", "Minimal"].map((category) => (
+          {["All", "Executive", "Creative", "Technology", "Sales", "Academic", "Minimal", "India"].map((category) => (
             <Button
               key={category}
               variant={category === "All" ? "default" : "outline"}
@@ -148,26 +159,31 @@ const Templates = () => {
                                        color.toLowerCase() === 'navy' ? '#1E40AF' :
                                        color.toLowerCase() === 'maroon' ? '#991B1B' :
                                        color.toLowerCase() === 'gold' ? '#F59E0B' :
-                                       color.toLowerCase() === 'orange' ? '#F97316' :
-                                       color.toLowerCase() === 'pink' ? '#EC4899' :
-                                       color.toLowerCase() === 'teal' ? '#14B8A6' : '#6B7280'
+                        color.toLowerCase() === 'orange' ? '#F97316' :
+                                        color.toLowerCase() === 'pink' ? '#EC4899' :
+                                        color.toLowerCase() === 'teal' ? '#14B8A6' :
+                                        color.toLowerCase() === 'saffron' ? '#FF9933' : '#6B7280'
                       }}
                     />
                   ))}
                 </div>
                 
-                <Button className="w-full" variant="outline">
-                  Use This Template
-                </Button>
+                <Link to={`/resume/sample?template=${template.id}&name=${encodeURIComponent(template.name)}`}>
+                  <Button className="w-full" variant="outline">
+                    Use This Template
+                  </Button>
+                </Link>
               </div>
             </Card>
           ))}
         </div>
 
         <div className="text-center">
-          <Button size="lg" className="btn-neumorphic">
-            View All 50+ Templates
-          </Button>
+          <Link to="/templates">
+            <Button size="lg" className="btn-neumorphic">
+              View All 50+ Templates
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

@@ -134,9 +134,38 @@ const SupportWidget = () => {
       }
     } catch (error: any) {
       console.error('Error sending message:', error);
-      toast.error('Failed to send message. Please try again.');
-      // Remove the temporary message on error
-      setMessages(prev => prev.filter(msg => msg.id !== tempUserMessage.id));
+      
+      let errorMessage = 'Failed to send message. Please try again.';
+      
+      // Handle specific OpenAI quota errors
+      if (error?.message?.includes('insufficient_quota') || 
+          error?.message?.includes('quota') || 
+          error?.message?.includes('429')) {
+        errorMessage = 'Our AI support is temporarily unavailable due to high demand. Please try again later or contact us directly.';
+      } else if (error?.message?.includes('OpenAI API error')) {
+        errorMessage = 'AI support is temporarily unavailable. Please try again in a few minutes.';
+      }
+      
+      toast.error(errorMessage);
+      
+      // Add error message to chat for better UX
+      const errorAiMessage: Message = {
+        id: `error-${Date.now()}`,
+        message: `I apologize, but I'm experiencing some technical difficulties right now. ${errorMessage.includes('quota') ? 'Our AI service is temporarily down due to high usage.' : 'Please try your message again.'} 
+
+For immediate assistance, you can contact us directly at support@resumebuilder.com`,
+        is_ai_response: true,
+        created_at: new Date().toISOString(),
+      };
+      
+      // Remove temp message and add both user and error messages
+      setMessages(prev => {
+        const withoutTemp = prev.filter(msg => msg.id !== tempUserMessage.id);
+        return [...withoutTemp, 
+          { ...tempUserMessage, id: `user-${Date.now()}` },
+          errorAiMessage
+        ];
+      });
     } finally {
       setIsLoading(false);
     }

@@ -15,6 +15,10 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import ColdEmail from "./pages/ColdEmail";
 import CoverLetter from "./pages/CoverLetter";
+import SampleResume from "./pages/SampleResume";
+import SamplePortfolio from "./pages/SamplePortfolio";
+import TemplatesPage from "./pages/TemplatesPage";
+import PortfolioAI from "./pages/PortfolioAI";
 import NotFound from "./pages/NotFound";
 import SupportWidget from "./components/SupportWidget";
 
@@ -56,6 +60,10 @@ const App = () => (
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/tools/cold-email" element={<ColdEmail />} />
                 <Route path="/tools/cover-letter" element={<CoverLetter />} />
+                <Route path="/resume/sample" element={<SampleResume />} />
+                <Route path="/portfolio/sample" element={<SamplePortfolio />} />
+                <Route path="/portfolio/ai" element={<PortfolioAI />} />
+                <Route path="/templates" element={<TemplatesPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
