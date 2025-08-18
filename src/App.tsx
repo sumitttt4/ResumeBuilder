@@ -8,7 +8,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { CookieConsent } from "@/components/CookieConsent";
 import { useEffect } from "react";
 import { trackPageView, initializeAnalytics } from "@/lib/analytics";
-import * as Sentry from '@sentry/react';
+
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Terms from "./pages/Terms";
@@ -48,7 +48,6 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Sentry.ErrorBoundary fallback={ErrorFallback} showDialog>
               <AnalyticsTracker />
               <Routes>
                 <Route path="/" element={<Index />} />
@@ -62,7 +61,6 @@ const App = () => (
               </Routes>
               <SupportWidget />
               <CookieConsent />
-            </Sentry.ErrorBoundary>
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
