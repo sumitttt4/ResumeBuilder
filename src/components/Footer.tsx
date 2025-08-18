@@ -1,4 +1,5 @@
 import { FileText, Twitter, Linkedin, Github, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -59,8 +60,8 @@ const Footer = () => {
               <a href="#" className="block text-sm text-muted-foreground hover:text-primary transition-colors">About Us</a>
               <a href="#" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Careers</a>
               <a href="#" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Contact</a>
-              <a href="#" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</a>
-              <a href="#" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Terms of Service</a>
+              <Link to="/privacy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>
@@ -68,7 +69,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-border/40">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © 2024 Resume Builder. All rights reserved.
+              © {new Date().getFullYear()} Resume Builder. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
               <span>Made with ❤️ for professionals</span>

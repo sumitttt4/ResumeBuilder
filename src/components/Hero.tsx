@@ -74,6 +74,8 @@ const Hero = () => {
                 src={heroImage} 
                 alt="Resume and Portfolio Builder Preview" 
                 className="w-full h-auto rounded-2xl"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             
