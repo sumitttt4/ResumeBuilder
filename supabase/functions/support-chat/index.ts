@@ -94,6 +94,14 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('OpenRouter API key not configured');
     }
 
+    // Model fallback chain for better reliability
+    const models = [
+      'meta-llama/llama-3.1-8b-instruct:free',
+      'openai/gpt-4o-mini',
+      'google/gemini-2.0-flash-001',
+      'anthropic/claude-3.5-haiku'
+    ];
+
     // Build conversation context
     const conversationHistory = messages?.map(msg => ({
       role: msg.is_ai_response ? 'assistant' : 'user',
@@ -120,33 +128,52 @@ Common topics you can help with:
 
 If you cannot resolve an issue or if the user requests human support, acknowledge this and let them know their request will be escalated to our support team.`;
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openRouterApiKey}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://bdacvgunqboxgrjuhcyy.supabase.co',
-        'X-Title': 'AI Resume Builder Support'
-      },
-      body: JSON.stringify({
-        model: 'meta-llama/llama-3.1-8b-instruct:free',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          ...conversationHistory
-        ],
-        max_tokens: 500,
-        temperature: 0.7,
-      }),
-    });
+    // Try models with fallback
+    let aiResponse = '';
+    let lastError = null;
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('OpenRouter API error:', errorText);
-      throw new Error(`OpenRouter API error: ${response.status}`);
+    for (const model of models) {
+      try {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${openRouterApiKey}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': 'https://bdacvgunqboxgrjuhcyy.supabase.co',
+            'X-Title': 'AI Resume Builder Support'
+          },
+          body: JSON.stringify({
+            model,
+            messages: [
+              { role: 'system', content: systemPrompt },
+              ...conversationHistory
+            ],
+            max_tokens: 500,
+            temperature: 0.7,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          aiResponse = data.choices[0].message.content;
+          console.log(`✅ Support chat success with model: ${model}`);
+          break;
+        } else {
+          const errorText = await response.text();
+          console.log(`❌ Support model ${model} failed:`, errorText);
+          lastError = new Error(`Model ${model} failed: ${response.status}`);
+        }
+      } catch (error) {
+        console.log(`❌ Support model ${model} error:`, error);
+        lastError = error;
+        continue;
+      }
     }
 
-    const data = await response.json();
-    const aiResponse = data.choices[0].message.content;
+    if (!aiResponse) {
+      console.error('All support models failed. Last error:', lastError);
+      throw new Error('AI support is temporarily unavailable. Please try again later.');
+    }
 
     // Save AI response
     const { error: aiMessageError } = await supabase

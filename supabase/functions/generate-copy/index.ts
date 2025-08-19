@@ -8,7 +8,7 @@ const corsHeaders = {
 };
 
 interface GenerateRequest {
-  type: 'cold_email' | 'cover_letter' | 'portfolio';
+  type: 'cold_email' | 'cover_letter' | 'portfolio' | 'resume';
   prompt: string;
   context?: any;
 }
@@ -24,16 +24,13 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get user from JWT
-    const authHeader = req.headers.get('Authorization')!;
-    const jwt = authHeader.replace('Bearer ', '');
-    const { data: { user } } = await supabase.auth.getUser(jwt);
-
-    if (!user) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    // Get user from JWT (optional for public access)
+    let user = null;
+    const authHeader = req.headers.get('Authorization');
+    if (authHeader) {
+      const jwt = authHeader.replace('Bearer ', '');
+      const { data: { user: authUser } } = await supabase.auth.getUser(jwt);
+      user = authUser;
     }
 
     const { type, prompt, context }: GenerateRequest = await req.json();
@@ -50,6 +47,14 @@ const handler = async (req: Request): Promise<Response> => {
     if (!openRouterApiKey) {
       throw new Error('OpenRouter API key not configured');
     }
+
+    // Model fallback chain for better reliability
+    const models = [
+      'meta-llama/llama-3.1-8b-instruct:free',
+      'openai/gpt-4o-mini',
+      'google/gemini-2.0-flash-001',
+      'anthropic/claude-3.5-haiku'
+    ];
 
     let systemPrompt = '';
     if (type === 'cold_email') {
@@ -96,49 +101,91 @@ const handler = async (req: Request): Promise<Response> => {
       6. Call-to-action suggestions
       
       Format as structured content with clear section headings.`;
+    } else if (type === 'resume') {
+      systemPrompt = `You are an expert ATS-optimized resume writer specializing in the Indian job market. Create professional resumes that:
+      - Pass ATS (Applicant Tracking System) scans effectively
+      - Use industry-standard keywords and formatting
+      - Highlight quantifiable achievements and impact
+      - Follow best practices for Indian recruiters and HR systems
+      - Include relevant technical and soft skills
+      - Use action verbs and result-oriented language
+      - Structure content for maximum readability
+      - Optimize for both ATS parsing and human review
+      
+      Create a complete resume with these sections:
+      1. Professional Summary (2-3 lines highlighting key strengths)
+      2. Core Skills (technical and soft skills relevant to the role)
+      3. Professional Experience (with quantified achievements)
+      4. Education (degree, institution, year)
+      5. Certifications (if relevant)
+      6. Projects (key projects with impact)
+      
+      Format as a structured, ATS-friendly resume ready for Indian job applications.`;
     }
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openRouterApiKey}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://bdacvgunqboxgrjuhcyy.supabase.co',
-        'X-Title': 'AI Resume Builder'
-      },
-      body: JSON.stringify({
-        model: 'meta-llama/llama-3.1-8b-instruct:free',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: prompt }
-        ],
-        max_tokens: 1000,
-        temperature: 0.7,
-      }),
-    });
+    // Try models with fallback
+    let generatedContent = '';
+    let lastError = null;
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('OpenRouter API error:', errorText);
-      throw new Error(`OpenRouter API error: ${response.status}`);
+    for (const model of models) {
+      try {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${openRouterApiKey}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': 'https://bdacvgunqboxgrjuhcyy.supabase.co',
+            'X-Title': 'AI Resume Builder'
+          },
+          body: JSON.stringify({
+            model,
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: prompt }
+            ],
+            max_tokens: 1000,
+            temperature: 0.7,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          generatedContent = data.choices[0].message.content;
+          console.log(`✅ Success with model: ${model}`);
+          break;
+        } else {
+          const errorText = await response.text();
+          console.log(`❌ Model ${model} failed:`, errorText);
+          lastError = new Error(`Model ${model} failed: ${response.status}`);
+        }
+      } catch (error) {
+        console.log(`❌ Model ${model} error:`, error);
+        lastError = error;
+        continue;
+      }
     }
 
-    const data = await response.json();
-    const generatedContent = data.choices[0].message.content;
+    if (!generatedContent) {
+      console.error('All models failed. Last error:', lastError);
+      throw new Error('All AI models are currently unavailable. Please try again later.');
+    }
 
-    // Save to database
-    const { error: dbError } = await supabase
-      .from('generations')
-      .insert({
-        user_id: user.id,
-        type,
-        input_data: { prompt, context },
-        generated_content: generatedContent,
-      });
+    // Save to database (only if user is authenticated)
+    if (user) {
+      const { error: dbError } = await supabase
+        .from('generations')
+        .insert({
+          user_id: user.id,
+          type,
+          input_data: { prompt, context },
+          generated_content: generatedContent,
+        });
 
-    if (dbError) {
-      console.error('Database error:', dbError);
-      throw new Error('Failed to save generation');
+      if (dbError) {
+        console.error('Database error:', dbError);
+        // Don't fail the request if DB save fails for anonymous users
+        console.warn('Failed to save generation for authenticated user');
+      }
     }
 
     return new Response(

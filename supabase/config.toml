@@ -1,4 +1,7 @@
 project_id = "bdacvgunqboxgrjuhcyy"
 
+[functions.generate-copy]
+verify_jwt = false
+
 [functions.support-chat]
 verify_jwt = false
