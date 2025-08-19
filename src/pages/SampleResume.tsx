@@ -16,8 +16,8 @@ const SampleResume = () => {
   const templateName = params.get('name') || 'Professional Executive';
   
   const [formData, setFormData] = useState({
-    fullName: 'Rajesh Kumar',
-    email: 'rajesh.kumar@email.com',
+    fullName: 'Raj Dutta',
+    email: 'raj.dutta@email.com',
     phone: '+91 98765 43210',
     location: 'Mumbai, Maharashtra',
     title: 'Senior Software Engineer',

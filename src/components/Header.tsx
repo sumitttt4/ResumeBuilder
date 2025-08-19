@@ -19,7 +19,7 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-              <FileText className="h-5 w-5 text-white" />
+              <span className="text-xl font-bold text-white">R</span>
             </div>
             <div>
               <h1 className="text-xl font-bold font-heading text-foreground">Resume Builder</h1>

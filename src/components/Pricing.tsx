@@ -2,8 +2,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Star, Zap } from "lucide-react";
+import { useState } from "react";
 
-const plans = [
+const monthlyPlans = [
   {
     name: "Free",
     price: "₹0",
@@ -69,7 +70,76 @@ const plans = [
   }
 ];
 
+const yearlyPlans = [
+  {
+    name: "Free",
+    price: "₹0",
+    period: "Forever",
+    description: "Perfect for getting started with basic resume building",
+    features: [
+      "3 resume downloads per month",
+      "5 basic templates",
+      "Basic AI suggestions",
+      "PDF export",
+      "Job readiness score",
+      "Mobile responsive"
+    ],
+    limitations: [
+      "Watermark on resumes",
+      "Limited template customization"
+    ],
+    cta: "Get Started Free",
+    popular: false,
+    variant: "outline" as const
+  },
+  {
+    name: "Professional",
+    price: "₹2,999",
+    period: "per year",
+    description: "Most popular choice for job seekers and professionals",
+    features: [
+      "Unlimited resume downloads",
+      "50+ premium templates",
+      "Advanced AI-powered suggestions",
+      "Multi-language support (20+ Indian languages)",
+      "Portfolio website generator",
+      "ATS optimization scanner",
+      "LinkedIn profile optimizer",
+      "Cover letter generator",
+      "Priority support",
+      "No watermarks"
+    ],
+    cta: "Start 7-Day Free Trial",
+    popular: true,
+    variant: "default" as const
+  },
+  {
+    name: "Enterprise",
+    price: "₹9,999",
+    period: "per year",
+    description: "For teams, recruiters, and career coaches",
+    features: [
+      "Everything in Professional",
+      "Team collaboration tools",
+      "Bulk resume processing",
+      "Advanced analytics dashboard",
+      "White-label solution",
+      "API access",
+      "Custom branding",
+      "Dedicated account manager",
+      "Training & onboarding",
+      "SLA support"
+    ],
+    cta: "Contact Sales",
+    popular: false,
+    variant: "outline" as const
+  }
+];
+
 const Pricing = () => {
+  const [isYearly, setIsYearly] = useState(false);
+  const currentPlans = isYearly ? yearlyPlans : monthlyPlans;
+
   return (
     <section id="pricing" className="py-24 bg-background">
       <div className="container mx-auto px-4">
@@ -89,10 +159,20 @@ const Pricing = () => {
         {/* Pricing Toggle */}
         <div className="flex justify-center mb-12">
           <div className="bg-muted p-1 rounded-full">
-            <Button variant="default" size="sm" className="rounded-full px-6">
+            <Button 
+              variant={!isYearly ? "default" : "ghost"} 
+              size="sm" 
+              className="rounded-full px-6"
+              onClick={() => setIsYearly(false)}
+            >
               Monthly
             </Button>
-            <Button variant="ghost" size="sm" className="rounded-full px-6">
+            <Button 
+              variant={isYearly ? "default" : "ghost"} 
+              size="sm" 
+              className="rounded-full px-6"
+              onClick={() => setIsYearly(true)}
+            >
               Yearly <Badge variant="secondary" className="ml-2">Save 20%</Badge>
             </Button>
           </div>
@@ -100,7 +180,7 @@ const Pricing = () => {
 
         {/* Pricing Cards */}
         <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {plans.map((plan) => (
+          {currentPlans.map((plan) => (
             <Card 
               key={plan.name} 
               className={`relative p-8 ${plan.popular ? 'card-neumorphic border-primary/20' : 'card-feature'}`}
