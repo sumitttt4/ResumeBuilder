@@ -45,10 +45,10 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    // Prepare OpenAI request
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+    // Prepare OpenRouter request
+    const openRouterApiKey = Deno.env.get('OPENROUTER_API_KEY');
+    if (!openRouterApiKey) {
+      throw new Error('OpenRouter API key not configured');
     }
 
     let systemPrompt = '';
@@ -98,14 +98,16 @@ const handler = async (req: Request): Promise<Response> => {
       Format as structured content with clear section headings.`;
     }
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${openRouterApiKey}`,
         'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://bdacvgunqboxgrjuhcyy.supabase.co',
+        'X-Title': 'AI Resume Builder'
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: prompt }
@@ -117,8 +119,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenAI API error:', errorText);
-      throw new Error(`OpenAI API error: ${response.status}`);
+      console.error('OpenRouter API error:', errorText);
+      throw new Error(`OpenRouter API error: ${response.status}`);
     }
 
     const data = await response.json();

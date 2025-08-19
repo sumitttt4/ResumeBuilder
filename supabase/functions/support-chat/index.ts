@@ -89,9 +89,9 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Generate AI response
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+    const openRouterApiKey = Deno.env.get('OPENROUTER_API_KEY');
+    if (!openRouterApiKey) {
+      throw new Error('OpenRouter API key not configured');
     }
 
     // Build conversation context
@@ -120,14 +120,16 @@ Common topics you can help with:
 
 If you cannot resolve an issue or if the user requests human support, acknowledge this and let them know their request will be escalated to our support team.`;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${openRouterApiKey}`,
         'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://bdacvgunqboxgrjuhcyy.supabase.co',
+        'X-Title': 'AI Resume Builder Support'
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
         messages: [
           { role: 'system', content: systemPrompt },
           ...conversationHistory
@@ -139,8 +141,8 @@ If you cannot resolve an issue or if the user requests human support, acknowledg
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenAI API error:', errorText);
-      throw new Error(`OpenAI API error: ${response.status}`);
+      console.error('OpenRouter API error:', errorText);
+      throw new Error(`OpenRouter API error: ${response.status}`);
     }
 
     const data = await response.json();
