@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Sparkles, Globe, Zap, Award } from "lucide-react";
-import heroImage from "@/assets/hero-illustration.jpg";
+import heroImage from "@/assets/hero-3d-illustration.jpg";
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen gradient-hero flex items-center overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+          <div className="space-y-8 fade-in-left">
             <div className="space-y-4">
               <Badge variant="secondary" className="w-fit bg-accent text-accent-foreground px-3 py-1">
                 <Sparkles className="w-3 h-3 mr-1" />
@@ -45,9 +45,9 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/resume/sample">
-                <Button size="lg" className="bg-primary hover:bg-primary-hover text-primary-foreground px-8 py-4 text-lg font-semibold">
+                <Button size="lg" className="btn-gradient group">
                   Create Resume Free
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
               <Link to="/templates">
@@ -73,11 +73,11 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="relative">
-            <div className="card-neumorphic">
+          <div className="relative fade-in-right">
+            <div className="card-neumorphic card-tilt">
               <img 
                 src={heroImage} 
-                alt="Resume and Portfolio Builder Preview" 
+                alt="AI Resume and Portfolio Builder - 3D Illustration" 
                 className="w-full h-auto rounded-2xl"
                 loading="lazy"
                 decoding="async"
@@ -85,7 +85,7 @@ const Hero = () => {
             </div>
             
             {/* Floating elements */}
-            <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary rounded-2xl flex items-center justify-center soft-shadow">
+            <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary rounded-2xl flex items-center justify-center soft-shadow animate-pulse">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             

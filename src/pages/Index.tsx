@@ -5,7 +5,7 @@ import Features from "@/components/Features";
 import Templates from "@/components/Templates";
 import Portfolio from "@/components/Portfolio";
 import Pricing from "@/components/Pricing";
-import Footer from "@/components/Footer";
+import ModernFooter from "@/components/ModernFooter";
 
 const Index = () => {
   return (
@@ -19,7 +19,7 @@ const Index = () => {
         <Portfolio />
         <Pricing />
       </main>
-      <Footer />
+      <ModernFooter />
     </div>
   );
 };

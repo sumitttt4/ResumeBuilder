@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Star, Download, Eye } from "lucide-react";
+import { Star, Download, Eye, ExternalLink } from "lucide-react";
 
 const templates = [
   {
@@ -81,11 +81,11 @@ const Templates = () => {
   return (
     <section id="templates" className="py-24 bg-gradient-hero">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 fade-in-up">
           <Badge variant="secondary" className="mb-4">
             ATS-Optimized Templates
           </Badge>
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 className="text-4xl font-bold mb-4 font-heading">
             Professional Resume Templates
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -95,12 +95,12 @@ const Templates = () => {
         </div>
 
         {/* Template Categories */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-4 mb-12 fade-in-up">
           {["All", "Executive", "Creative", "Technology", "Sales", "Academic", "Minimal", "India"].map((category) => (
             <Button
               key={category}
               variant={category === "All" ? "default" : "outline"}
-              className="rounded-full"
+              className="rounded-full hover:scale-105 transition-transform"
             >
               {category}
             </Button>
@@ -109,26 +109,43 @@ const Templates = () => {
 
         {/* Templates Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {templates.map((template) => (
-            <Card key={template.id} className="card-feature group cursor-pointer">
-              <div className="relative mb-4">
-                <div className="aspect-[3/4] bg-muted rounded-lg flex items-center justify-center">
+          {templates.map((template, index) => (
+            <div 
+              key={template.id} 
+              className="card-template fade-in-up" 
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="relative mb-4 overflow-hidden">
+                <div className="aspect-[3/4] bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center relative group-hover:scale-105 transition-transform duration-300">
                   <div className="text-center">
                     <div className="w-16 h-16 bg-primary/10 rounded-lg mb-2 mx-auto flex items-center justify-center">
                       <Eye className="w-8 h-8 text-primary" />
                     </div>
-                    <p className="text-sm text-muted-foreground">Preview</p>
+                    <p className="text-sm text-muted-foreground">Live Preview</p>
                   </div>
                 </div>
                 {template.featured && (
-                  <Badge className="absolute top-3 left-3">Featured</Badge>
+                  <Badge className="absolute top-3 left-3 bg-primary">Featured</Badge>
                 )}
-                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 rounded-lg transition-all duration-300" />
+                
+                {/* Hover overlay with actions */}
+                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 rounded-lg transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="secondary" className="backdrop-blur-sm">
+                      <Eye className="w-4 h-4 mr-1" />
+                      Preview
+                    </Button>
+                    <Button size="sm" className="backdrop-blur-sm">
+                      <ExternalLink className="w-4 h-4 mr-1" />
+                      Use Template
+                    </Button>
+                  </div>
+                </div>
               </div>
               
-              <div className="space-y-3">
+              <div className="p-6 space-y-3">
                 <div>
-                  <h3 className="font-semibold text-lg">{template.name}</h3>
+                  <h3 className="font-semibold text-lg font-heading">{template.name}</h3>
                   <p className="text-sm text-muted-foreground">{template.category}</p>
                 </div>
                 
@@ -147,7 +164,7 @@ const Templates = () => {
                   {template.colors.map((color) => (
                     <div
                       key={color}
-                      className="w-6 h-6 rounded-full border-2 border-background"
+                      className="w-6 h-6 rounded-full border-2 border-background shadow-sm"
                       style={{
                         backgroundColor: color.toLowerCase() === 'blue' ? '#3B82F6' :
                                        color.toLowerCase() === 'purple' ? '#8B5CF6' :
@@ -169,19 +186,20 @@ const Templates = () => {
                 </div>
                 
                 <Link to={`/resume/sample?template=${template.id}&name=${encodeURIComponent(template.name)}`}>
-                  <Button className="w-full" variant="outline">
+                  <Button className="w-full btn-gradient">
                     Use This Template
                   </Button>
                 </Link>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
 
-        <div className="text-center">
+        <div className="text-center fade-in-up">
           <Link to="/templates">
-            <Button size="lg" className="btn-neumorphic">
+            <Button size="lg" className="btn-neumorphic group">
               View All 50+ Templates
+              <ExternalLink className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
         </div>

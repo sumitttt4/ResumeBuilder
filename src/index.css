@@ -52,7 +52,7 @@ All colors MUST be HSL.
     --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(210 25% 96%));
 
     /* Typography */
-    --font-heading: 'Inter', system-ui, sans-serif;
+    --font-heading: 'Poppins', system-ui, sans-serif;
     --font-body: 'Inter', system-ui, sans-serif;
 
     --radius: 0.5rem;
@@ -156,7 +156,7 @@ All colors MUST be HSL.
     background: var(--gradient-hero);
   }
 
-  /* Button Variants */
+  /* Modern Button Variants */
   .btn-neumorphic {
     @apply neumorphic px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105;
   }
@@ -169,12 +169,101 @@ All colors MUST be HSL.
     @apply neumorphic-inset;
   }
 
-  /* Card Variants */
+  .btn-gradient {
+    @apply gradient-primary text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl;
+  }
+
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, hsl(200 90% 50%), hsl(200 95% 40%));
+    box-shadow: 0 20px 40px hsl(200 85% 55% / 0.3);
+  }
+
+  /* Modern Card Variants */
   .card-neumorphic {
     @apply neumorphic rounded-3xl p-8;
   }
 
   .card-feature {
-    @apply soft-shadow rounded-2xl p-6 bg-card hover:scale-105 transition-all duration-300;
+    @apply soft-shadow rounded-2xl p-6 bg-card hover:scale-105 transition-all duration-300 hover:shadow-lg group;
+  }
+
+  .card-feature:hover {
+    box-shadow: 0 10px 30px hsl(var(--shadow-dark) / 0.2);
+  }
+
+  .card-template {
+    @apply relative overflow-hidden rounded-2xl bg-card border transition-all duration-300 hover:scale-105 hover:shadow-2xl group cursor-pointer;
+  }
+
+  .card-template:hover {
+    box-shadow: 0 20px 40px hsl(200 85% 55% / 0.2);
+  }
+
+  /* Animations */
+  .fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .fade-in-left {
+    animation: fade-in-left 0.6s ease-out forwards;
+  }
+
+  .fade-in-right {
+    animation: fade-in-right 0.6s ease-out forwards;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fade-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Hover underline animation */
+  .nav-link {
+    @apply relative transition-colors;
+  }
+
+  .nav-link::after {
+    @apply absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 content-[''];
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  /* Card tilt effect */
+  .card-tilt {
+    transition: transform 0.3s ease-out;
+  }
+
+  .card-tilt:hover {
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
   }
 }

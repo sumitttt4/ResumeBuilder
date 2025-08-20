@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { FileText, User, LogOut, Mail, FileText as FileTextIcon, Menu, Home } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { FileText, User, LogOut, Mail, FileText as FileTextIcon, Menu, Home, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import ThemeToggle from "./ThemeToggle";
@@ -13,6 +13,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,25 +31,71 @@ const Header = () => {
           <nav className="hidden lg:flex items-center gap-8">
             <Link 
               to="/" 
-              className={`text-sm font-medium transition-colors flex items-center gap-2 ${
+              className={`text-sm font-medium nav-link flex items-center gap-2 ${
                 isActive('/') ? 'text-primary' : 'text-muted-foreground hover:text-primary'
               }`}
             >
               <Home className="h-4 w-4" />
               Home
             </Link>
-            <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+            <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-primary nav-link">
               Features
             </a>
-            <a href="#templates" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-              Templates
-            </a>
-            <a href="#portfolio" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+            
+            {/* Templates Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="text-sm font-medium text-muted-foreground hover:text-primary nav-link flex items-center gap-1">
+                  Templates
+                  <ChevronDown className="h-3 w-3" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link to="/templates" className="flex items-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    All Templates
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <a href="#templates" className="flex items-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    Featured Templates
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            <a href="#portfolio" className="text-sm font-medium text-muted-foreground hover:text-primary nav-link">
               Portfolio
             </a>
-            <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-              Pricing
-            </a>
+            
+            {/* Pricing Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="text-sm font-medium text-muted-foreground hover:text-primary nav-link flex items-center gap-1">
+                  Pricing
+                  <ChevronDown className="h-3 w-3" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-48">
+                <DropdownMenuItem asChild>
+                  <a href="#pricing" className="flex items-center gap-2">
+                    Pricing Plans
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/terms" className="flex items-center gap-2">
+                    Terms & Conditions
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/privacy" className="flex items-center gap-2">
+                    Privacy Policy
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -162,7 +209,7 @@ const Header = () => {
                 <Button variant="ghost" size="sm" className="hidden sm:flex" asChild>
                   <Link to="/auth">Sign In</Link>
                 </Button>
-                <Button className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium px-6" asChild>
+                <Button className="btn-gradient font-medium px-6" asChild>
                   <Link to="/auth">Get Started</Link>
                 </Button>
               </>
