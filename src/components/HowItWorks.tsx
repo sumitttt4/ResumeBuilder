@@ -58,7 +58,7 @@ const HowItWorks = () => {
               const IconComponent = step.icon;
               return (
                 <div key={step.step} className="relative">
-                  <Card className="card-feature h-full p-6 text-center">
+                  <Card className="card-feature group h-full p-6 text-center">
                     <div className="relative mb-6">
                       <div className="w-16 h-16 bg-primary/10 rounded-2xl mx-auto flex items-center justify-center mb-4">
                         <IconComponent className="w-8 h-8 text-primary" />

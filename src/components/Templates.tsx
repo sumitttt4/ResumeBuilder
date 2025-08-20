@@ -112,7 +112,7 @@ const Templates = () => {
           {templates.map((template, index) => (
             <div 
               key={template.id} 
-              className="card-template fade-in-up" 
+              className="card-template group fade-in-up" 
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="relative mb-4 overflow-hidden">

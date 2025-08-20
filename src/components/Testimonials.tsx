@@ -109,7 +109,7 @@ const Testimonials = () => {
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial) => (
-            <Card key={testimonial.name} className="card-feature p-6 h-full">
+            <Card key={testimonial.name} className="card-feature group p-6 h-full">
               <div className="relative">
                 <Quote className="absolute -top-2 -left-2 w-8 h-8 text-primary/20" />
                 

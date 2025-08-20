@@ -184,7 +184,12 @@ All colors MUST be HSL.
   }
 
   .card-feature {
-    @apply soft-shadow rounded-2xl p-6 bg-card hover:scale-105 transition-all duration-300 hover:shadow-lg group;
+    @apply soft-shadow rounded-2xl p-6 bg-card hover:scale-105 transition-all duration-300 hover:shadow-lg;
+  }
+  
+  /* Add group utility directly in HTML instead of @apply */
+  .card-feature.group {
+    @apply hover:shadow-lg;
   }
 
   .card-feature:hover {
@@ -192,7 +197,12 @@ All colors MUST be HSL.
   }
 
   .card-template {
-    @apply relative overflow-hidden rounded-2xl bg-card border transition-all duration-300 hover:scale-105 hover:shadow-2xl group cursor-pointer;
+    @apply relative overflow-hidden rounded-2xl bg-card border transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer;
+  }
+
+  /* Add group utility directly in HTML instead of @apply */
+  .card-template.group {
+    @apply hover:shadow-2xl;
   }
 
   .card-template:hover {
@@ -265,5 +275,134 @@ All colors MUST be HSL.
 
   .card-tilt:hover {
     transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+  }
+
+  /* New Animations */
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes gradient-text {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 1s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 1s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-gradient-text {
+    background: linear-gradient(to right, hsl(var(--primary)), hsl(200 90% 45%));
+    background-size: 200% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: gradient-text 3s linear infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 1s ease-out forwards;
+  }
+
+  @keyframes count-up {
+    from {
+      transform: translateY(10%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-counter {
+    display: inline-block;
+    animation: count-up 2s ease-out forwards;
+    opacity: 0;
+    transform: translateY(10%);
+  }
+
+  /* Add shine effect for gradients */
+  @keyframes shine {
+    from {
+      background-position: 200% center;
+    }
+    to {
+      background-position: -200% center;
+    }
+  }
+
+  .animate-shine {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--primary-hover)) 25%,
+      hsl(var(--primary)) 50%,
+      hsl(var(--primary-hover)) 75%,
+      hsl(var(--primary)) 100%
+    );
+    background-size: 200% auto;
+    animation: shine 3s linear infinite;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
   }
 }

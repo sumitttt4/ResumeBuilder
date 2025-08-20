@@ -56,7 +56,7 @@ const LanguageShowcase = () => {
         {/* Language Grid */}
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 mb-16">
           {languages.map((language) => (
-            <Card key={language.name} className="card-feature p-4 text-center cursor-pointer hover:scale-105 transition-transform">
+            <Card key={language.name} className="card-feature group p-4 text-center cursor-pointer hover:scale-105 transition-transform">
               <div className="text-2xl mb-2">{language.flag}</div>
               <h3 className="font-semibold text-sm mb-1">{language.name}</h3>
               <p className="text-lg font-medium mb-2" style={{
