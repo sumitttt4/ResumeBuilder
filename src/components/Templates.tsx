@@ -3,10 +3,22 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Download, Eye, ExternalLink } from "lucide-react";
+import atsResumePreview from "@/assets/ats-resume-preview.jpg";
 
 const templates = [
   {
     id: 1,
+    name: "ATS Optimized",
+    category: "ATS",
+    rating: 4.9,
+    downloads: "28.3k",
+    preview: atsResumePreview,
+    colors: ["Black", "Blue", "Gray"],
+    featured: true,
+    isATS: true
+  },
+  {
+    id: 2,
     name: "Professional Executive",
     category: "Executive",
     rating: 4.9,
@@ -16,7 +28,7 @@ const templates = [
     featured: true
   },
   {
-    id: 2,
+    id: 3,
     name: "Creative Designer",
     category: "Creative",
     rating: 4.8,
@@ -26,7 +38,7 @@ const templates = [
     featured: true
   },
   {
-    id: 3,
+    id: 4,
     name: "Tech Developer",
     category: "Technology",
     rating: 4.9,
@@ -36,7 +48,7 @@ const templates = [
     featured: false
   },
   {
-    id: 4,
+    id: 5,
     name: "Modern Minimal",
     category: "Minimal",
     rating: 4.7,
@@ -46,7 +58,7 @@ const templates = [
     featured: false
   },
   {
-    id: 5,
+    id: 6,
     name: "Sales Professional",
     category: "Sales",
     rating: 4.8,
@@ -56,7 +68,7 @@ const templates = [
     featured: false
   },
   {
-    id: 6,
+    id: 7,
     name: "Academic Scholar",
     category: "Academic",
     rating: 4.6,
@@ -66,7 +78,7 @@ const templates = [
     featured: false
   },
   {
-    id: 7,
+    id: 8,
     name: "Indian Professional",
     category: "India",
     rating: 4.8,
@@ -96,7 +108,7 @@ const Templates = () => {
 
         {/* Template Categories */}
         <div className="flex flex-wrap justify-center gap-4 mb-12 fade-in-up">
-          {["All", "Executive", "Creative", "Technology", "Sales", "Academic", "Minimal", "India"].map((category) => (
+          {["All", "ATS", "Executive", "Creative", "Technology", "Sales", "Academic", "Minimal", "India"].map((category) => (
             <Button
               key={category}
               variant={category === "All" ? "default" : "outline"}
@@ -116,16 +128,29 @@ const Templates = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="relative mb-4 overflow-hidden">
-                <div className="aspect-[3/4] bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center relative group-hover:scale-105 transition-transform duration-300">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-primary/10 rounded-lg mb-2 mx-auto flex items-center justify-center">
-                      <Eye className="w-8 h-8 text-primary" />
+                <div className="aspect-[3/4] rounded-lg relative group-hover:scale-105 transition-transform duration-300 overflow-hidden">
+                  {template.preview && template.preview !== "/api/placeholder/300/400" ? (
+                    <img 
+                      src={template.preview} 
+                      alt={`${template.name} preview`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="bg-gradient-to-br from-muted to-muted/50 w-full h-full flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="w-16 h-16 bg-primary/10 rounded-lg mb-2 mx-auto flex items-center justify-center">
+                          <Eye className="w-8 h-8 text-primary" />
+                        </div>
+                        <p className="text-sm text-muted-foreground">Live Preview</p>
+                      </div>
                     </div>
-                    <p className="text-sm text-muted-foreground">Live Preview</p>
-                  </div>
+                  )}
                 </div>
                 {template.featured && (
                   <Badge className="absolute top-3 left-3 bg-primary">Featured</Badge>
+                )}
+                {template.isATS && (
+                  <Badge className="absolute top-3 right-3 bg-green-600">ATS Friendly</Badge>
                 )}
                 
                 {/* Hover overlay with actions */}
