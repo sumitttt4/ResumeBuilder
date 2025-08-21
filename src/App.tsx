@@ -9,6 +9,7 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { useEffect } from "react";
 import { trackPageView, initializeAnalytics } from "@/lib/analytics";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+import AccessibilityImprovement from "@/components/AccessibilityImprovement";
 
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -83,11 +84,13 @@ const App = () => (
       >
         <AuthProvider>
           <TooltipProvider>
+            <AccessibilityImprovement />
             <Toaster />
             <Sonner />
             <BrowserRouter>
               <AnalyticsTracker />
-              <Routes>
+              <main id="main-content">
+                <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/terms" element={<Terms />} />
@@ -100,7 +103,8 @@ const App = () => (
                 <Route path="/templates" element={<TemplatesPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
-              </Routes>
+                </Routes>
+              </main>
               <SupportWidget />
               <CookieConsent />
             </BrowserRouter>

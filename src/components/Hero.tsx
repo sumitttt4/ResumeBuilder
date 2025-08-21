@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Sparkles, Globe, Zap, Award } from "lucide-react";
-import heroImage from "@/assets/hero-3d-illustration.jpg";
 
 const Hero = () => {
+  // Use a working Pexels image for the hero illustration
+  const heroImage = "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600";
+
   return (
     <section className="relative min-h-screen gradient-hero flex items-center overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">

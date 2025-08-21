@@ -3,7 +3,6 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Download, Eye, ExternalLink } from "lucide-react";
-import atsResumePreview from "@/assets/ats-resume-preview.jpg";
 
 const templates = [
   {
@@ -12,7 +11,7 @@ const templates = [
     category: "ATS",
     rating: 4.9,
     downloads: "28.3k",
-    preview: atsResumePreview,
+    preview: "https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=400",
     colors: ["Black", "Blue", "Gray"],
     featured: true,
     isATS: true
@@ -23,7 +22,7 @@ const templates = [
     category: "Executive",
     rating: 4.9,
     downloads: "15.2k",
-    preview: "/api/placeholder/300/400",
+    preview: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=400",
     colors: ["Blue", "Black", "Gray"],
     featured: true
   },
@@ -33,7 +32,7 @@ const templates = [
     category: "Creative",
     rating: 4.8,
     downloads: "12.7k",
-    preview: "/api/placeholder/300/400",
+    preview: "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=400",
     colors: ["Purple", "Teal", "Pink"],
     featured: true
   },
@@ -43,7 +42,7 @@ const templates = [
     category: "Technology",
     rating: 4.9,
     downloads: "18.5k",
-    preview: "/api/placeholder/300/400",
+    preview: "https://images.pexels.com/photos/590018/pexels-photo-590018.jpeg?auto=compress&cs=tinysrgb&w=400",
     colors: ["Green", "Blue", "Orange"],
     featured: false
   },
@@ -53,7 +52,7 @@ const templates = [
     category: "Minimal",
     rating: 4.7,
     downloads: "9.3k",
-    preview: "/api/placeholder/300/400",
+    preview: "https://images.pexels.com/photos/590017/pexels-photo-590017.jpeg?auto=compress&cs=tinysrgb&w=400",
     colors: ["Black", "White", "Gray"],
     featured: false
   },
@@ -63,7 +62,7 @@ const templates = [
     category: "Sales",
     rating: 4.8,
     downloads: "11.9k",
-    preview: "/api/placeholder/300/400",
+    preview: "https://images.pexels.com/photos/590019/pexels-photo-590019.jpeg?auto=compress&cs=tinysrgb&w=400",
     colors: ["Red", "Blue", "Gold"],
     featured: false
   },
@@ -73,7 +72,7 @@ const templates = [
     category: "Academic",
     rating: 4.6,
     downloads: "7.8k",
-    preview: "/api/placeholder/300/400",
+    preview: "https://images.pexels.com/photos/590021/pexels-photo-590021.jpeg?auto=compress&cs=tinysrgb&w=400",
     colors: ["Navy", "Maroon", "Gray"],
     featured: false
   },
@@ -83,7 +82,7 @@ const templates = [
     category: "India",
     rating: 4.8,
     downloads: "25.1k",
-    preview: "/api/placeholder/300/400",
+    preview: "https://images.pexels.com/photos/590023/pexels-photo-590023.jpeg?auto=compress&cs=tinysrgb&w=400",
     colors: ["Saffron", "Blue", "Green"],
     featured: true
   }

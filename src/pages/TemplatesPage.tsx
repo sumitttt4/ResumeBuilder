@@ -15,7 +15,7 @@ const allTemplates = [
     category: 'Executive',
     rating: 4.9,
     downloads: '15.2k',
-    preview: '/api/placeholder/300/400',
+    preview: 'https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=400',
     colors: ['Blue', 'Black', 'Gray'],
     featured: true,
     description: 'Perfect for senior-level positions and executive roles'
@@ -26,7 +26,7 @@ const allTemplates = [
     category: 'Creative',
     rating: 4.8,
     downloads: '12.7k',
-    preview: '/api/placeholder/300/400',
+    preview: 'https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=400',
     colors: ['Purple', 'Teal', 'Pink'],
     featured: true,
     description: 'Ideal for designers, artists, and creative professionals'
@@ -37,7 +37,7 @@ const allTemplates = [
     category: 'Technology',
     rating: 4.9,
     downloads: '18.5k',
-    preview: '/api/placeholder/300/400',
+    preview: 'https://images.pexels.com/photos/590018/pexels-photo-590018.jpeg?auto=compress&cs=tinysrgb&w=400',
     colors: ['Green', 'Blue', 'Orange'],
     featured: false,
     description: 'Optimized for software developers and IT professionals'
@@ -48,7 +48,7 @@ const allTemplates = [
     category: 'Minimal',
     rating: 4.7,
     downloads: '9.3k',
-    preview: '/api/placeholder/300/400',
+    preview: 'https://images.pexels.com/photos/590017/pexels-photo-590017.jpeg?auto=compress&cs=tinysrgb&w=400',
     colors: ['Black', 'White', 'Gray'],
     featured: false,
     description: 'Clean and simple design for any profession'
@@ -59,7 +59,7 @@ const allTemplates = [
     category: 'India',
     rating: 4.8,
     downloads: '25.1k',
-    preview: '/api/placeholder/300/400',
+    preview: 'https://images.pexels.com/photos/590019/pexels-photo-590019.jpeg?auto=compress&cs=tinysrgb&w=400',
     colors: ['Saffron', 'Blue', 'Green'],
     featured: true,
     description: 'Tailored for Indian job market with local preferences'
@@ -70,7 +70,7 @@ const allTemplates = [
     category: 'Sales',
     rating: 4.8,
     downloads: '11.9k',
-    preview: '/api/placeholder/300/400',
+    preview: 'https://images.pexels.com/photos/590021/pexels-photo-590021.jpeg?auto=compress&cs=tinysrgb&w=400',
     colors: ['Red', 'Blue', 'Gold'],
     featured: false,
     description: 'Perfect for sales representatives and account managers'
@@ -81,7 +81,7 @@ const allTemplates = [
     category: 'Academic',
     rating: 4.6,
     downloads: '7.8k',
-    preview: '/api/placeholder/300/400',
+    preview: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=400',
     colors: ['Navy', 'Maroon', 'Gray'],
     featured: false,
     description: 'Designed for researchers, professors, and academic roles'
@@ -92,7 +92,7 @@ const allTemplates = [
     category: 'Healthcare',
     rating: 4.7,
     downloads: '13.4k',
-    preview: '/api/placeholder/300/400',
+    preview: 'https://images.pexels.com/photos/590023/pexels-photo-590023.jpeg?auto=compress&cs=tinysrgb&w=400',
     colors: ['Teal', 'Blue', 'White'],
     featured: false,
     description: 'Specialized for doctors, nurses, and healthcare workers'
@@ -103,7 +103,7 @@ const allTemplates = [
     category: 'Finance',
     rating: 4.8,
     downloads: '16.7k',
-    preview: '/api/placeholder/300/400',
+    preview: 'https://images.pexels.com/photos/590024/pexels-photo-590024.jpeg?auto=compress&cs=tinysrgb&w=400',
     colors: ['Dark Blue', 'Gold', 'Gray'],
     featured: true,
     description: 'Tailored for banking, finance, and accounting professionals'
